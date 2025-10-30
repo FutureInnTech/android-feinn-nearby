@@ -2,7 +2,56 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- permission bluetooth -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:minSdkVersion="31"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="31" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_CONNECT"
+        android:minSdkVersion="31" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADVERTISE"
+        android:minSdkVersion="31" />
+
+    <!-- permission location -->
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:maxSdkVersion="30" />
+
+    <!-- permission notification -->
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        android:minSdkVersion="33" />
+
+    <!-- permission wifi -->
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:minSdkVersion="1" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:minSdkVersion="1" />
+
+    <!-- service permission -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
+        android:minSdkVersion="34" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        android:minSdkVersion="28" />
+
     <application
+        android:name=".FeinnNearbyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,6 +71,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <!-- services -->
+        <service
+            android:name=".data.service.DiscoveryNearbyService"
+            android:foregroundServiceType="connectedDevice" />
+
     </application>
 
 </manifest>
