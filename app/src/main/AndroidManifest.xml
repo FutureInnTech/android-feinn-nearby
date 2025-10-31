@@ -22,12 +22,8 @@
         android:minSdkVersion="31" />
 
     <!-- permission location -->
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION"
-        android:maxSdkVersion="30" />
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"
-        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- permission notification -->
     <uses-permission
@@ -41,14 +37,21 @@
     <uses-permission
         android:name="android.permission.CHANGE_WIFI_STATE"
         android:minSdkVersion="1" />
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:minSdkVersion="33" />
 
     <!-- service permission -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        android:minSdkVersion="28"
+        tools:ignore="ForegroundServicesPolicy" />
     <uses-permission
         android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
         android:minSdkVersion="34" />
     <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE"
-        android:minSdkVersion="28" />
+        android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+        android:minSdkVersion="34" />
 
     <application
         android:name=".FeinnNearbyApplication"
@@ -76,6 +79,10 @@
         <!-- services -->
         <service
             android:name=".data.service.DiscoveryNearbyService"
+            android:foregroundServiceType="connectedDevice" />
+
+        <service
+            android:name=".data.service.AdvertisingNearbyService"
             android:foregroundServiceType="connectedDevice" />
 
     </application>

@@ -1,10 +1,7 @@
 package id.feinn.feinnnearby.model
 
-import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo
-
 data class NearbyDevice(
-    val endpointId: String,
-    val info: DiscoveredEndpointInfo
+    val endpointId: String
 ) {
 
     override fun equals(other: Any?): Boolean {
