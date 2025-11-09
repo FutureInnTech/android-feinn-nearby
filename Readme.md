@@ -28,7 +28,7 @@ Semua komunikasi dilakukan dengan:
 
 - Menggunakan kunci publik & privat per perangkat
 - Negosiasi kunci awal melalui handshake lokal
-- Pesan dienkripsi sebelum dikirim menggunakan AES-GCM
+- Pesan dienkripsi sebelum dikirim menggunakan end to end encryption
 - Payload hanya dapat dibuka oleh penerima yang memiliki kunci privat terkait
 
 ## Tujuan Akhir
