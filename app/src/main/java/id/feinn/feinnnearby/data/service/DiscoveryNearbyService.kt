@@ -17,24 +17,23 @@ import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback
 import com.google.android.gms.nearby.connection.Strategy
 import id.feinn.feinnnearby.R
 import id.feinn.feinnnearby.model.NearbyDevice
+import id.feinn.feinnnearby.utils.FeinnNearby
 import id.feinn.feinnnearby.utils.FeinnNotification
 
 class DiscoveryNearbyService : Service() {
 
-    companion object Companion {
+    companion object {
 
         const val START_DISCOVERY = "id.feinn.feinnnearby.nearby.service.start_discovery"
         const val STOP_DISCOVERY = "id.feinn.feinnnearby.nearby.service.stop_discovery"
 
-        private const val DISCOVERY_SERVICE_ID = "feinnnearby.discovery_service"
-
     }
 
     private val discoveryNearbyBinder: DiscoveryNearbyBinder = DiscoveryNearbyBinder()
+    private var listener: DiscoveryNearbyListener? = null
+    private val connectionClient by lazy { Nearby.getConnectionsClient(this) }
     private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback =
         FeinnEndpointDiscoveryCallback()
-    private val connectionClient by lazy { Nearby.getConnectionsClient(this) }
-    private var listener: DiscoveryNearbyListener? = null
 
     private lateinit var notificationManager: NotificationManager
 
@@ -94,7 +93,7 @@ class DiscoveryNearbyService : Service() {
             .build()
 
         connectionClient.startDiscovery(
-            DISCOVERY_SERVICE_ID,
+            FeinnNearby.NEARBY_SERVICE_ID,
             endpointDiscoveryCallback,
             discoveryOptions
         ).addOnSuccessListener {
@@ -147,7 +146,7 @@ class DiscoveryNearbyService : Service() {
             .build()
     }
 
-    inner class DiscoveryNearbyBinder : Binder() {
+    private inner class DiscoveryNearbyBinder : Binder() {
 
         fun setListener(listener: DiscoveryNearbyListener?) {
             this@DiscoveryNearbyService.listener = listener
@@ -155,7 +154,7 @@ class DiscoveryNearbyService : Service() {
 
     }
 
-    inner class FeinnEndpointDiscoveryCallback : EndpointDiscoveryCallback() {
+    private inner class FeinnEndpointDiscoveryCallback : EndpointDiscoveryCallback() {
 
         private val discoveredEndpoint: LinkedHashMap<String, NearbyDevice> = linkedMapOf()
 
@@ -163,7 +162,7 @@ class DiscoveryNearbyService : Service() {
             endpointId: String,
             info: DiscoveredEndpointInfo
         ) {
-            val nearbyDevice = NearbyDevice(endpointId, info)
+            val nearbyDevice = NearbyDevice(endpointId)
             discoveredEndpoint[endpointId] = nearbyDevice
 
             listener?.onEndpointFound(nearbyDevice)
