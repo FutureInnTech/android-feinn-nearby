@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:language="en">
     <string name="app_name">Feinn Nearby</string>
 
+    <string name="communication_service_started">communication is off</string>
+
     <string name="discovery_nearby_notification_channel_name">Discovery service</string>
     <string name="discovery_nearby_not_discovery">Not discovery</string>
     <string name="discovery_nearby_single_device">Discovery 1 device</string>

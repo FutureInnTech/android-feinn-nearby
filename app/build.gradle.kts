@@ -88,6 +88,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // navigation 3
+    implementation(libs.navigation3.ui)
+    implementation(libs.navigation3.runtime)
+    implementation(libs.lifecycle.viewmodel.navigation3)
+
+
     // gms nearby
     implementation(libs.play.services.nearby)
 

@@ -1,6 +1,7 @@
 package id.feinn.feinnnearby
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import id.feinn.feinnnearby.data.service.communication.CommunicationNearbyService
 import id.feinn.feinnnearby.ui.theme.FeinnNearbyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        startService()
+
         enableEdgeToEdge()
 
         ensureNearbyPermission()
@@ -35,9 +41,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun startService() {
+        val communicationServiceIntent = Intent(this, CommunicationNearbyService::class.java)
+        ContextCompat.startForegroundService(this, communicationServiceIntent)
+    }
+
     private fun ensureNearbyPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.NEARBY_WIFI_DEVICES)
+            if (checkSelfPermission(Manifest.permission.NEARBY_WIFI_DEVICES)
                 != PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(
@@ -47,7 +58,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         } else {
-            if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(

@@ -18,6 +18,9 @@ android-compileSdk = "36"
 
 playServicesNearby = "19.3.0"
 
+navigation = "2.9.7"
+navigation3-viewmodel = "2.10.0"
+
 room = "2.8.0"
 
 [libraries]
@@ -43,6 +46,10 @@ play-services-nearby = { group = "com.google.android.gms", name = "play-services
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+navigation3-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation" }
+navigation3-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigation" }
+lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "navigation3-viewmodel" }
 
 
 

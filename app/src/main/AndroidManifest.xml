@@ -77,13 +77,10 @@
 
 
         <!-- services -->
-        <service
-            android:name=".data.service.DiscoveryNearbyService"
-            android:foregroundServiceType="connectedDevice" />
+        <service android:name=".data.service.communication.CommunicationNearbyService"
+            android:foregroundServiceType="connectedDevice"
+            android:exported="false" />
 
-        <service
-            android:name=".data.service.AdvertisingNearbyService"
-            android:foregroundServiceType="connectedDevice" />
 
     </application>
 
