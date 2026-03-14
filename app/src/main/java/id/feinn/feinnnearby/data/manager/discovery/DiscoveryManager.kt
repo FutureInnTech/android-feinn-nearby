@@ -12,8 +12,8 @@ class DiscoveryManager(
 ) {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
-    private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback =
-        FeinnEndpointDiscoveryCallback()
+    private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback = FeinnEndpointDiscoveryCallback()
+    private var discoveryNearbyListener: DiscoveryNearbyListener? = null
 
     fun startDiscovery() {
         val discoveryOptions = DiscoveryOptions.Builder()
@@ -25,19 +25,23 @@ class DiscoveryManager(
             endpointDiscoveryCallback,
             discoveryOptions
         ).addOnSuccessListener {
-            Log.d("DiscoveryManager", "Discovery Started")
+            Log.d("DiscoveryManager", "startDiscovery: Discovery Started")
+            discoveryNearbyListener?.onDiscoveryStarted()
         }.addOnFailureListener {
-            Log.e("DiscoveryManager", "Discovery Failed")
+            Log.e("DiscoveryManager", "startDiscovery: Discovery Failed")
+            discoveryNearbyListener?.onDiscoveryFailed(it)
         }
 
     }
 
     fun stopDiscovery() {
         connectionClient.stopDiscovery()
+        discoveryNearbyListener?.onDiscoveryStoped()
     }
 
     fun setListener(l: DiscoveryNearbyListener) {
-        endpointDiscoveryCallback.setListener(l)
+        discoveryNearbyListener = l
+        endpointDiscoveryCallback.setListener(discoveryNearbyListener!!)
     }
 
 

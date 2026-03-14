@@ -5,10 +5,10 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.ServiceCompat
 import id.feinn.feinnnearby.R
 import id.feinn.feinnnearby.data.manager.discovery.DiscoveryManager
-import id.feinn.feinnnearby.data.manager.discovery.DiscoveryNearbyListener
 import id.feinn.feinnnearby.utils.FeinnNotification
 
 class CommunicationNearbyService : Service() {
@@ -63,17 +63,17 @@ class CommunicationNearbyService : Service() {
         }
     }
 
-    fun setListenerDiscovery(listener: DiscoveryNearbyListener) {
-        discoveryManager.setListener(listener)
-    }
-
     private fun handleDiscoveryCommand(command: CommunicationNearbyCommand.Discovery) {
+        Log.d("CommunicationNearbyService", "handleCommand: discovery command for ${command.javaClass.simpleName}")
         when (command) {
-            is CommunicationNearbyCommand.Discovery.StartDiscovery -> {
+            CommunicationNearbyCommand.Discovery.StartDiscovery -> {
                 discoveryManager.startDiscovery()
             }
-            is CommunicationNearbyCommand.Discovery.StopDiscovery -> {
+            CommunicationNearbyCommand.Discovery.StopDiscovery -> {
                 discoveryManager.stopDiscovery()
+            }
+            is CommunicationNearbyCommand.Discovery.DiscoveryListener -> {
+                discoveryManager.setListener(command.listener)
             }
         }
     }

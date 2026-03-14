@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
     private fun startService() {
         val communicationServiceIntent = Intent(this, CommunicationNearbyService::class.java)
         ContextCompat.startForegroundService(this, communicationServiceIntent)
-        communicationNearbyManager.doBind()
+        communicationNearbyManager.ensureBind()
     }
 
     override fun onDestroy() {
