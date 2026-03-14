@@ -9,18 +9,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import id.feinn.feinnnearby.data.service.communication.CommunicationNearbyManager
 import id.feinn.feinnnearby.data.service.communication.CommunicationNearbyService
+import id.feinn.feinnnearby.ui.NavigationViewModel
+import id.feinn.feinnnearby.ui.RootNavHost
 import id.feinn.feinnnearby.ui.theme.FeinnNearbyTheme
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: NavigationViewModel by viewModel()
+    private val communicationNearbyManager: CommunicationNearbyManager by inject()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,15 +35,15 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        ensureNearbyPermission()
         setContent {
             FeinnNearbyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val backstack by viewModel.backstackEntry.collectAsStateWithLifecycle()
+
+                RootNavHost(
+                    modifier = Modifier.fillMaxSize(),
+                    backStack = backstack,
+                    onBack = viewModel::pop
+                )
             }
         }
     }
@@ -44,6 +51,12 @@ class MainActivity : ComponentActivity() {
     private fun startService() {
         val communicationServiceIntent = Intent(this, CommunicationNearbyService::class.java)
         ContextCompat.startForegroundService(this, communicationServiceIntent)
+        communicationNearbyManager.doBind()
+    }
+
+    override fun onDestroy() {
+        communicationNearbyManager.doUnbind()
+        super.onDestroy()
     }
 
     private fun ensureNearbyPermission() {
@@ -68,21 +81,5 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FeinnNearbyTheme {
-        Greeting("Android")
     }
 }
