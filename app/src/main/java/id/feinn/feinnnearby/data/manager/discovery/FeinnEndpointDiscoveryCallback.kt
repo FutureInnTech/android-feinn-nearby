@@ -5,9 +5,9 @@ import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback
 import id.feinn.feinnnearby.model.NearbyDevice
 
 class FeinnEndpointDiscoveryCallback : EndpointDiscoveryCallback() {
-    private var listener: DiscoveryNearbyListener? = null
+    private var listener: DiscoveryListener? = null
 
-    fun setListener(l: DiscoveryNearbyListener) {
+    fun setListener(l: DiscoveryListener) {
         listener = l
     }
 

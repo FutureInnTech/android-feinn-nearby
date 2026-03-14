@@ -8,12 +8,14 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ServiceCompat
 import id.feinn.feinnnearby.R
+import id.feinn.feinnnearby.data.manager.advertising.AdvertisingManager
 import id.feinn.feinnnearby.data.manager.discovery.DiscoveryManager
 import id.feinn.feinnnearby.utils.FeinnNotification
 
 class CommunicationNearbyService : Service() {
 
     private lateinit var discoveryManager: DiscoveryManager
+    private lateinit var advertisingManager: AdvertisingManager
 
     private val communicationNearbyBinder = CommunicationNearbyBinder(
         communicationNearbyService = this
@@ -28,6 +30,7 @@ class CommunicationNearbyService : Service() {
         startForeground()
 
         discoveryManager = DiscoveryManager(this)
+        advertisingManager = AdvertisingManager(this)
     }
 
     @Synchronized
@@ -57,6 +60,7 @@ class CommunicationNearbyService : Service() {
     }
 
     fun handleCommand(command: CommunicationNearbyCommand) {
+        Log.d("CommunicationNearbyService", "handleCommand: command for ${command.javaClass.simpleName}")
         when (command) {
             is CommunicationNearbyCommand.Discovery -> handleDiscoveryCommand(command)
             is CommunicationNearbyCommand.Advertising -> handleAdvertisingCommand(command)
@@ -64,15 +68,14 @@ class CommunicationNearbyService : Service() {
     }
 
     private fun handleDiscoveryCommand(command: CommunicationNearbyCommand.Discovery) {
-        Log.d("CommunicationNearbyService", "handleCommand: discovery command for ${command.javaClass.simpleName}")
         when (command) {
-            CommunicationNearbyCommand.Discovery.StartDiscovery -> {
+            CommunicationNearbyCommand.Discovery.StartDiscoveryCommand -> {
                 discoveryManager.startDiscovery()
             }
-            CommunicationNearbyCommand.Discovery.StopDiscovery -> {
+            CommunicationNearbyCommand.Discovery.StopDiscoveryCommand -> {
                 discoveryManager.stopDiscovery()
             }
-            is CommunicationNearbyCommand.Discovery.DiscoveryListener -> {
+            is CommunicationNearbyCommand.Discovery.DiscoveryListenerCommand -> {
                 discoveryManager.setListener(command.listener)
             }
         }
@@ -80,9 +83,14 @@ class CommunicationNearbyService : Service() {
 
     private fun handleAdvertisingCommand(command: CommunicationNearbyCommand.Advertising) {
         when (command) {
-            is CommunicationNearbyCommand.Advertising.StartAdvertising -> {
+            CommunicationNearbyCommand.Advertising.StartAdvertisingCommand -> {
+                advertisingManager.startAdvertising()
             }
-            is CommunicationNearbyCommand.Advertising.StopAdvertising -> {
+            CommunicationNearbyCommand.Advertising.StopAdvertisingCommand -> {
+                advertisingManager.stopAdvertising()
+            }
+            is CommunicationNearbyCommand.Advertising.AdvertisingListenerCommand -> {
+                advertisingManager.setListener(command.listener)
             }
         }
     }

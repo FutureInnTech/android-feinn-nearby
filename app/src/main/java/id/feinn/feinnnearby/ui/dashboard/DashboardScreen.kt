@@ -22,7 +22,7 @@ fun DashboardScreen(
         ) {
             Button(
                 onClick = {
-                    onEvent(DashboardEvent.StartDiscovery)
+                    onEvent(DashboardEvent.StartBroadcast)
                 }
             ) {
                 Text("Start Discovery")
@@ -30,7 +30,7 @@ fun DashboardScreen(
 
             Button(
                 onClick = {
-                    onEvent(DashboardEvent.StopDiscovery)
+                    onEvent(DashboardEvent.StopBroadcast)
                 }
             ) {
                 Text("Stop Discovery")

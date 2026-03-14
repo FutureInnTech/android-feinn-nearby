@@ -2,7 +2,8 @@ package id.feinn.feinnnearby.ui.dashboard
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import id.feinn.feinnnearby.data.manager.discovery.DiscoveryNearbyListener
+import id.feinn.feinnnearby.data.manager.advertising.AdvertisingListener
+import id.feinn.feinnnearby.data.manager.discovery.DiscoveryListener
 import id.feinn.feinnnearby.data.service.communication.CommunicationNearbyCommand
 import id.feinn.feinnnearby.data.service.communication.CommunicationNearbyManager
 import id.feinn.feinnnearby.model.NearbyDevice
@@ -11,18 +12,18 @@ class DashboardViewModel(
     private val communicationNearbyManager: CommunicationNearbyManager
 ) : ViewModel() {
 
-    private val discoveryNearbyListener = object : DiscoveryNearbyListener {
+    private val discoveryListener = object : DiscoveryListener {
 
         override fun onDiscoveryStarted() {
             Log.d("DashboardViewModel", "onDiscoveryStarted: Discovery Started")
         }
 
-        override fun onDiscoveryStoped() {
+        override fun onDiscoveryStopped() {
             Log.d("DashboardViewModel", "onDiscoveryStoped: Discovery Stoped")
         }
 
         override fun onDiscoveryFailed(e: Exception) {
-            Log.d("DashboardViewModel", "onDiscoveryFailed: Discovery Failed")
+            Log.e("DashboardViewModel", "onDiscoveryFailed: Discovery Failed")
         }
 
         override fun onEndpointFound(nearbyDevice: NearbyDevice) {
@@ -35,27 +36,57 @@ class DashboardViewModel(
 
     }
 
+    private val advertisingListener = object : AdvertisingListener {
+        override fun onAdvertisingStarted() {
+            Log.d("DashboardViewModel", "onAdvertisingStarted: Advertising Started")
+        }
+
+        override fun onAdvertisingStopped() {
+            Log.d("DashboardViewModel", "onAdvertisingStoped: Advertising Stoped")
+        }
+
+        override fun onAdvertisingFailed(e: Exception) {
+            Log.e("DashboardViewModel", "onAdvertisingFailed: Advertising Failed")
+        }
+
+        override fun onConnectionInitiated(nearbyDevice: NearbyDevice) {
+            Log.d("DashboardViewModel", "onConnectionInitiated: Connection Initiated")
+        }
+
+        override fun onConnectionResult(nearbyDevice: NearbyDevice) {
+            Log.d("DashboardViewModel", "onConnectionResult: Connection Result")
+        }
+
+        override fun onDisconnected(nearbyDevice: NearbyDevice) {
+            Log.d("DashboardViewModel", "onDisconnected: Disconnected")
+        }
+
+    }
+
     init {
-        setDiscoveryListener()
+        setBroadcastListener()
     }
 
     fun onEvent(event: DashboardEvent) {
         when(event) {
-            is DashboardEvent.StartDiscovery -> startDiscovery()
-            is DashboardEvent.StopDiscovery -> stopDiscovery()
+            is DashboardEvent.StartBroadcast -> startBroadcast()
+            is DashboardEvent.StopBroadcast -> stopBroadcast()
         }
     }
 
-    private fun setDiscoveryListener() {
-        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.DiscoveryListener(discoveryNearbyListener))
+    private fun setBroadcastListener() {
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.DiscoveryListenerCommand(discoveryListener))
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Advertising.AdvertisingListenerCommand(advertisingListener))
     }
 
-    private fun startDiscovery() {
-        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.StartDiscovery)
+    private fun startBroadcast() {
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.StartDiscoveryCommand)
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Advertising.StartAdvertisingCommand)
     }
 
-    private fun stopDiscovery() {
-        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.StopDiscovery)
+    private fun stopBroadcast() {
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Discovery.StopDiscoveryCommand)
+        communicationNearbyManager.sendCommand(CommunicationNearbyCommand.Advertising.StopAdvertisingCommand)
     }
 
 }
@@ -66,7 +97,7 @@ data class DashboardDataState(
 
 sealed interface DashboardEvent {
 
-    data object StartDiscovery: DashboardEvent
-    data object StopDiscovery: DashboardEvent
+    data object StartBroadcast: DashboardEvent
+    data object StopBroadcast: DashboardEvent
 
 }
