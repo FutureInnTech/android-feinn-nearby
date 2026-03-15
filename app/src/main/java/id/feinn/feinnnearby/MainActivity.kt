@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        ensureNearbyPermission()
         startService()
 
         enableEdgeToEdge()
@@ -60,26 +61,35 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun ensureNearbyPermission() {
+        val permissions = mutableListOf<String>()
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(Manifest.permission.NEARBY_WIFI_DEVICES)
-                != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.NEARBY_WIFI_DEVICES)
+        }
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permissions.add(Manifest.permission.BLUETOOTH_SCAN)
+            permissions.add(Manifest.permission.BLUETOOTH_ADVERTISE)
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
+        }
+        
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES),
-                    1001
-                )
-            }
-        } else {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+             permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
 
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    1002
-                )
-            }
+        val permissionsToRequest = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toTypedArray(),
+                1001
+            )
         }
     }
 }

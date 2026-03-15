@@ -10,10 +10,12 @@ import androidx.core.app.ServiceCompat
 import id.feinn.feinnnearby.R
 import id.feinn.feinnnearby.data.manager.advertising.AdvertisingManager
 import id.feinn.feinnnearby.data.manager.discovery.DiscoveryManager
+import id.feinn.feinnnearby.data.manager.pairing.PairingManager
 import id.feinn.feinnnearby.utils.FeinnNotification
 
 class CommunicationNearbyService : Service() {
 
+    private lateinit var pairingManager: PairingManager
     private lateinit var discoveryManager: DiscoveryManager
     private lateinit var advertisingManager: AdvertisingManager
 
@@ -29,8 +31,9 @@ class CommunicationNearbyService : Service() {
         super.onCreate()
         startForeground()
 
-        discoveryManager = DiscoveryManager(this)
-        advertisingManager = AdvertisingManager(this)
+        pairingManager = PairingManager(this)
+        discoveryManager = DiscoveryManager(this, pairingManager)
+        advertisingManager = AdvertisingManager(this, pairingManager)
     }
 
     @Synchronized

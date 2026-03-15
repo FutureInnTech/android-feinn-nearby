@@ -5,14 +5,18 @@ import android.util.Log
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.DiscoveryOptions
 import com.google.android.gms.nearby.connection.Strategy
+import id.feinn.feinnnearby.data.manager.pairing.PairingManager
 import id.feinn.feinnnearby.utils.FeinnNearby
 
 class DiscoveryManager(
-    private val context: Context
+    private val context: Context,
+    private val pairingManager: PairingManager
 ) {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
-    private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback = FeinnEndpointDiscoveryCallback()
+    private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback = FeinnEndpointDiscoveryCallback(
+        pairingManager = pairingManager
+    )
     private var discoveryListener: DiscoveryListener? = null
 
     fun startDiscovery() {
@@ -38,6 +42,7 @@ class DiscoveryManager(
 
     fun stopDiscovery() {
         connectionClient.stopDiscovery()
+        pairingManager.removeAllDiscoveryResult()
         discoveryListener?.onDiscoveryStopped()
     }
 

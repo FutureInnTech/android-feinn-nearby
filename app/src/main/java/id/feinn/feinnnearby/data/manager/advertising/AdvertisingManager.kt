@@ -6,14 +6,17 @@ import android.util.Log
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.AdvertisingOptions
 import com.google.android.gms.nearby.connection.Strategy
+import id.feinn.feinnnearby.data.manager.pairing.FeinnConnectionLifecycleCallback
+import id.feinn.feinnnearby.data.manager.pairing.PairingManager
 import id.feinn.feinnnearby.utils.FeinnNearby
 
 class AdvertisingManager(
-    private val context: Context
+    private val context: Context,
+    private val pairingManager: PairingManager
 ) {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
-    private val connectionLifecycleCallback: FeinnConnectionLifecycleCallback = FeinnConnectionLifecycleCallback()
+    private val connectionLifecycleCallback: FeinnConnectionLifecycleCallback = FeinnConnectionLifecycleCallback(pairingManager)
     private var advertisingListener: AdvertisingListener? = null
 
     fun startAdvertising() {
