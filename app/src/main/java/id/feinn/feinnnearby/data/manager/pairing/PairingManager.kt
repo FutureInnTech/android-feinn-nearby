@@ -5,10 +5,13 @@ import android.os.Build
 import android.util.Log
 import com.google.android.gms.nearby.Nearby
 import id.feinn.feinnnearby.FeinnException
+import id.feinn.feinnnearby.R
 import id.feinn.feinnnearby.data.service.communication.CommunicationLifecycle
 import id.feinn.feinnnearby.model.NearbyDevice
+import id.feinn.feinnnearby.utils.FeinnNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +24,8 @@ class PairingManager(
 ) : CommunicationLifecycle {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
-    private val nearbyResult: HashMap<String, NearbyDevice> = hashMapOf()
+    private val nearbyResults: MutableStateFlow<HashMap<String, NearbyDevice>> = MutableStateFlow(hashMapOf())
+    private var jobNearbyResult: Job? = null
     private val payloadCallback: FeinnPayloadCallback = FeinnPayloadCallback(this)
     private val connectionLifecycleCallback: FeinnConnectionLifecycleCallback = FeinnConnectionLifecycleCallback(this)
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -32,15 +36,15 @@ class PairingManager(
     }
 
     fun ensureAddDiscoveryResult(endpointId: String, nearbyDevice: NearbyDevice) {
-        nearbyResult[endpointId] = nearbyDevice
+        nearbyResults.value[endpointId] = nearbyDevice
     }
 
     @Throws(FeinnException::class)
     fun removeOrUpdateStatus(endpointId: String) {
-        val device = nearbyResult[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
+        val device = nearbyResults.value[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
 
         if (device.status == NearbyDevice.DeviceStatus.Discovered) {
-            nearbyResult.remove(endpointId)
+            nearbyResults.value.remove(endpointId)
             return
         }
 
@@ -48,12 +52,12 @@ class PairingManager(
     }
 
     fun removeAllDiscoveryResult() {
-        nearbyResult.clear()
+        nearbyResults.value.clear()
     }
 
     @Throws(FeinnException::class)
     fun updateStatus(endpointId: String, status: NearbyDevice.DeviceStatus) {
-        val device = nearbyResult[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
+        val device = nearbyResults.value[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
 
         device.status = status
 
@@ -62,7 +66,7 @@ class PairingManager(
 
     @Throws(FeinnException::class)
     fun acceptConnection(endpointId: String) {
-        val device = nearbyResult[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
+        val device = nearbyResults.value[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
 
         connectionClient.acceptConnection(endpointId, payloadCallback)
 
@@ -71,7 +75,7 @@ class PairingManager(
 
     @Throws(FeinnException::class)
     fun requestConnection(endpointId: String) {
-        val device = nearbyResult[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
+        val device = nearbyResults.value[endpointId] ?: throw FeinnException("endpointId $endpointId not found")
 
         connectionClient.requestConnection(
             Build.MODEL, // TODO change with address
@@ -93,8 +97,36 @@ class PairingManager(
     private suspend fun collectStatusCommunication() {
         isCommunicationActive.collectLatest { status ->
             Log.d("PairingManager", "collectStatusCommunication: $status")
-            // TODO status false show notifiaction not discovery and not advertising others show number of connected devices
+            if (status) {
+                updateNotificationCommunication()
+            } else {
+                destroyJobUpdateNotification()
+                FeinnNotification.updateCommunicationNearbyService(
+                    context,
+                    message = context.getString(R.string.communication_service_off),
+                    icon = R.drawable.ic_launcher_foreground,
+                )
+            }
         }
+    }
+
+    private fun updateNotificationCommunication() {
+        jobNearbyResult = coroutineScope.launch {
+            nearbyResults.collectLatest { nearbyResult ->
+                val message = context.getString(R.string.communication_nearby_number_of_connected, nearbyResult.size)
+
+                FeinnNotification.updateCommunicationNearbyService(
+                    context,
+                    message = message,
+                    icon = R.drawable.ic_launcher_foreground
+                )
+            }
+        }
+    }
+
+    private fun destroyJobUpdateNotification() {
+        jobNearbyResult?.cancel()
+        jobNearbyResult = null
     }
 
     override fun onCreate() {
@@ -105,6 +137,7 @@ class PairingManager(
 
     override fun onDestroy() {
         removeAllDiscoveryResult()
+        destroyJobUpdateNotification()
         coroutineScope.cancel()
     }
 
