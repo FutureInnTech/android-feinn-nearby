@@ -18,7 +18,7 @@ class FeinnConnectionLifecycleCallback(
         endpointId: String,
         connectionInfo: ConnectionInfo
     ) {
-        Log.d("PairingManager", "onConnectionInitiated: ${endpointId} ${connectionInfo.endpointName}")
+        Log.d("PairingManager", "onConnectionInitiated: $endpointId ${connectionInfo.endpointName}")
         val nearbyDevice = NearbyDevice(
             endpointId = endpointId,
             endpointName = connectionInfo.endpointName
@@ -40,7 +40,7 @@ class FeinnConnectionLifecycleCallback(
         endpointId: String,
         connectionResolution: ConnectionResolution
     ) {
-        Log.d("PairingManager", "onConnectionResult: ${endpointId} ${connectionResolution.status.statusCode}")
+        Log.d("PairingManager", "onConnectionResult: $endpointId ${connectionResolution.status.statusCode}")
         when (connectionResolution.status.statusCode) {
 
             ConnectionsStatusCodes.STATUS_OK, ConnectionsStatusCodes.STATUS_ALREADY_CONNECTED_TO_ENDPOINT -> {
@@ -73,7 +73,7 @@ class FeinnConnectionLifecycleCallback(
         )
     }
 
-    fun setListener(l: AdvertisingListener) {
+    fun setListener(l: AdvertisingListener?) {
         listener = l
     }
 

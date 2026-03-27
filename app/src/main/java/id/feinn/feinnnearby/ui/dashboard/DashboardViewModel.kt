@@ -19,7 +19,7 @@ class DashboardViewModel(
         }
 
         override fun onDiscoveryStopped() {
-            Log.d("DashboardViewModel", "onDiscoveryStoped: Discovery Stoped")
+            Log.d("DashboardViewModel", "onDiscoveryStopped: Discovery Stopped")
         }
 
         override fun onDiscoveryFailed(e: Exception) {
@@ -42,7 +42,7 @@ class DashboardViewModel(
         }
 
         override fun onAdvertisingStopped() {
-            Log.d("DashboardViewModel", "onAdvertisingStoped: Advertising Stoped")
+            Log.d("DashboardViewModel", "onAdvertisingStoped: Advertising Stopped")
         }
 
         override fun onAdvertisingFailed(e: Exception) {

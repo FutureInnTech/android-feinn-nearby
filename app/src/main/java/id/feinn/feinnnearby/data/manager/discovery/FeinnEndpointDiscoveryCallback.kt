@@ -11,7 +11,7 @@ class FeinnEndpointDiscoveryCallback(
 ) : EndpointDiscoveryCallback() {
     private var listener: DiscoveryListener? = null
 
-    fun setListener(l: DiscoveryListener) {
+    fun setListener(l: DiscoveryListener?) {
         listener = l
     }
 

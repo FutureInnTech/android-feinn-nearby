@@ -34,6 +34,10 @@ class CommunicationNearbyService : Service() {
         pairingManager = PairingManager(this)
         discoveryManager = DiscoveryManager(this, pairingManager)
         advertisingManager = AdvertisingManager(this, pairingManager)
+
+        pairingManager.onCreate()
+        discoveryManager.onCreate()
+        advertisingManager.onCreate()
     }
 
     @Synchronized
@@ -46,7 +50,7 @@ class CommunicationNearbyService : Service() {
             context = this,
             channelId = FeinnNotification.NOTIFICATION_CHANNEL_ID_COMMUNICATION_NEARBY_SERVICE,
             title = getString(R.string.app_name),
-            content = getString(R.string.communication_service_started),
+            content = getString(R.string.communication_service_off),
             icon = R.drawable.ic_launcher_foreground
         )
 
@@ -67,7 +71,19 @@ class CommunicationNearbyService : Service() {
         when (command) {
             is CommunicationNearbyCommand.Discovery -> handleDiscoveryCommand(command)
             is CommunicationNearbyCommand.Advertising -> handleAdvertisingCommand(command)
+            is CommunicationNearbyCommand.StartCommunicationCommand -> handleStartCommunicationCommand()
+            is CommunicationNearbyCommand.StopCommunicationCommand -> handleStopCommunicationCommand()
         }
+    }
+
+    private fun handleStartCommunicationCommand() {
+        discoveryManager.startDiscovery()
+        advertisingManager.startAdvertising()
+    }
+
+    private fun handleStopCommunicationCommand() {
+        discoveryManager.stopDiscovery()
+        advertisingManager.stopAdvertising()
     }
 
     private fun handleDiscoveryCommand(command: CommunicationNearbyCommand.Discovery) {
@@ -98,6 +114,13 @@ class CommunicationNearbyService : Service() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        pairingManager.onDestroy()
+        discoveryManager.onDestroy()
+        advertisingManager.onDestroy()
 
+        stopForeground(STOP_FOREGROUND_REMOVE)
+    }
 
 }

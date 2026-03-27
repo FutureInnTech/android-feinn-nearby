@@ -6,12 +6,13 @@ import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.DiscoveryOptions
 import com.google.android.gms.nearby.connection.Strategy
 import id.feinn.feinnnearby.data.manager.pairing.PairingManager
+import id.feinn.feinnnearby.data.service.communication.CommunicationLifecycle
 import id.feinn.feinnnearby.utils.FeinnNearby
 
 class DiscoveryManager(
     private val context: Context,
     private val pairingManager: PairingManager
-) {
+): CommunicationLifecycle {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
     private val endpointDiscoveryCallback: FeinnEndpointDiscoveryCallback = FeinnEndpointDiscoveryCallback(
@@ -30,10 +31,12 @@ class DiscoveryManager(
             discoveryOptions
         ).addOnSuccessListener {
             Log.d("DiscoveryManager", "startDiscovery: Discovery Started")
+            pairingManager.updateDiscoveryStatus(true)
 
             discoveryListener?.onDiscoveryStarted()
         }.addOnFailureListener {
             Log.e("DiscoveryManager", "startDiscovery: Discovery Failed")
+            pairingManager.updateDiscoveryStatus(false)
 
             discoveryListener?.onDiscoveryFailed(it)
         }
@@ -42,13 +45,22 @@ class DiscoveryManager(
 
     fun stopDiscovery() {
         connectionClient.stopDiscovery()
-        pairingManager.removeAllDiscoveryResult()
+        pairingManager.updateDiscoveryStatus(false)
         discoveryListener?.onDiscoveryStopped()
     }
 
     fun setListener(l: DiscoveryListener) {
         discoveryListener = l
-        endpointDiscoveryCallback.setListener(discoveryListener!!)
+        endpointDiscoveryCallback.setListener(discoveryListener)
+    }
+
+    override fun onCreate() {
+        // do nothing
+    }
+
+    override fun onDestroy() {
+        endpointDiscoveryCallback.setListener(null)
+        discoveryListener = null
     }
 
 

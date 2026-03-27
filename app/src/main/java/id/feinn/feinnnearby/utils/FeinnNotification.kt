@@ -20,7 +20,7 @@ object FeinnNotification {
 
         val notificationChannelDiscovery = NotificationChannel(
             NOTIFICATION_CHANNEL_ID_COMMUNICATION_NEARBY_SERVICE,
-            context.getString(R.string.discovery_nearby_notification_channel_name),
+            context.getString(R.string.communication_nearby_notification_channel_name),
             NotificationManager.IMPORTANCE_LOW
         )
 
@@ -48,7 +48,7 @@ object FeinnNotification {
             createNotification(
                 context = context,
                 channelId = NOTIFICATION_CHANNEL_ID_COMMUNICATION_NEARBY_SERVICE,
-                title = context.getString(R.string.discovery_nearby_notification_channel_name),
+                title = context.getString(R.string.app_name),
                 content = message,
                 icon = icon
             )

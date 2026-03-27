@@ -19,4 +19,7 @@ sealed interface CommunicationNearbyCommand {
 
     }
 
+    sealed interface StartCommunicationCommand: CommunicationNearbyCommand
+    sealed interface StopCommunicationCommand: CommunicationNearbyCommand
+
 }

@@ -8,12 +8,13 @@ import com.google.android.gms.nearby.connection.AdvertisingOptions
 import com.google.android.gms.nearby.connection.Strategy
 import id.feinn.feinnnearby.data.manager.pairing.FeinnConnectionLifecycleCallback
 import id.feinn.feinnnearby.data.manager.pairing.PairingManager
+import id.feinn.feinnnearby.data.service.communication.CommunicationLifecycle
 import id.feinn.feinnnearby.utils.FeinnNearby
 
 class AdvertisingManager(
     private val context: Context,
     private val pairingManager: PairingManager
-) {
+): CommunicationLifecycle {
 
     private val connectionClient by lazy { Nearby.getConnectionsClient(context) }
     private val connectionLifecycleCallback: FeinnConnectionLifecycleCallback = FeinnConnectionLifecycleCallback(pairingManager)
@@ -31,10 +32,12 @@ class AdvertisingManager(
             advertisingOptions
         ).addOnSuccessListener {
             Log.d("AdvertisingManager", "startAdvertising: Advertising started")
+            pairingManager.updateAdvertisingStatus(true)
 
             advertisingListener?.onAdvertisingStarted()
         }.addOnFailureListener {
             Log.e("AdvertisingManager", "startAdvertising: advertising failed")
+            pairingManager.updateAdvertisingStatus(false)
 
             advertisingListener?.onAdvertisingFailed(it)
         }
@@ -42,6 +45,7 @@ class AdvertisingManager(
 
     fun stopAdvertising() {
         connectionClient.stopAdvertising()
+        pairingManager.updateAdvertisingStatus(false)
     }
 
     fun setListener(l: AdvertisingListener) {
@@ -49,5 +53,13 @@ class AdvertisingManager(
         connectionLifecycleCallback.setListener(advertisingListener!!)
     }
 
+    override fun onCreate() {
+        // do nothing
+    }
+
+    override fun onDestroy() {
+        connectionLifecycleCallback.setListener(null)
+        advertisingListener = null
+    }
 
 }
