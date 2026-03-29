@@ -1,6 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:language="en">
     <string name="app_name">Feinn Nearby</string>
 
+    <string name="onboarding_illustration_image_description">Onboarding image illustration</string>
+    <string name="onboarding_title_part1">Communicate Anywhere.</string>
+    <string name="onboarding_title_part2">No Internet Required.</string>
+    <string name="onboarding_description">Feinn Nearby uses decentralized mesh networking to keep you connected, even in the most remote or restricted environments. Every message is end-to-end encrypted.</string>
+    <string name="onboarding_feature_mesh">Offline Mesh</string>
+    <string name="onboarding_feature_encrypted">E2E Encrypted</string>
+    <string name="onboarding_feature_no_servers">No Central Servers</string>
+    <string name="onboarding_button_get_started">Get Started</string>
+    <string name="onboarding_footer_text">JOIN THE SECURE NETWORK</string>
+
     <string name="communication_service_off">communication is off</string>
     <string name="communication_nearby_notification_channel_name">Communication service</string>
 

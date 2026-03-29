@@ -9,4 +9,7 @@ sealed interface NavScreen : NavKey {
     @Serializable
     data object DashboardScreen: NavScreen
 
+    @Serializable
+    data object OnboardingScreen: NavScreen
+
 }

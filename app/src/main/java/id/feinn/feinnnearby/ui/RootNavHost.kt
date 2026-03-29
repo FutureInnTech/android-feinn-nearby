@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import id.feinn.feinnnearby.ui.dashboard.dashboardScreen
+import id.feinn.feinnnearby.ui.onboarding.onboardingScreen
 
 @Composable
 fun RootNavHost(
@@ -19,6 +20,7 @@ fun RootNavHost(
         onBack = onBack,
         entryProvider = entryProvider {
             dashboardScreen()
+            onboardingScreen()
         }
 
     )

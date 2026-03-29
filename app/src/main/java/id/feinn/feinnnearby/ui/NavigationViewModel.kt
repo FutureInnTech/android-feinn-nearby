@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 
 class NavigationViewModel : ViewModel() {
 
-    private val _backstackEntry = MutableStateFlow(listOf<NavScreen>(NavScreen.DashboardScreen))
+    private val _backstackEntry = MutableStateFlow(listOf<NavScreen>(NavScreen.OnboardingScreen))
     val backstackEntry: StateFlow<List<NavScreen>> = _backstackEntry
 
     fun push(screen: NavScreen) {
