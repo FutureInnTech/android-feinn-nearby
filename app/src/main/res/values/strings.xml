@@ -15,4 +15,18 @@
     <string name="communication_nearby_notification_channel_name">Communication service</string>
 
     <string name="communication_nearby_number_of_connected">Connected %d devices</string>
+
+    <string name="permission_education_title">Privacy &amp; Connectivity</string>
+    <string name="permission_education_description">To create a secure offline network, Feinn Nearby requires the following permissions. We never track your location or share your data.</string>
+    <string name="permission_bluetooth_title">Bluetooth</string>
+    <string name="permission_bluetooth_description">For scanning and connecting to nearby devices.</string>
+    <string name="permission_location_title">Location</string>
+    <string name="permission_location_description">Required by Android to scan for nearby Bluetooth and Wi-Fi devices.</string>
+    <string name="permission_notifications_title">Notifications</string>
+    <string name="permission_notifications_description">To alert you of incoming mesh messages.</string>
+    <string name="permission_wifi_title">Wi-Fi</string>
+    <string name="permission_wifi_description">To establish high-speed peer-to-peer data transfers.</string>
+    <string name="permission_encrypted_mesh_text">End-to-end encrypted local mesh</string>
+    <string name="permission_button_allow_all">Allow All Permissions</string>
+    <string name="permission_button_setup_manually">Set Up Manually</string>
 </resources>
