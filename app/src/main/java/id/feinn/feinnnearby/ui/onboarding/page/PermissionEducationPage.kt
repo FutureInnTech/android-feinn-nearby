@@ -27,7 +27,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -243,11 +242,11 @@ private fun EncryptedMeshCard(modifier: Modifier = Modifier) {
     ) {
         Image(
             modifier = Modifier
-                .fillMaxWidth()
-                .alpha(0.4f),
+                .fillMaxWidth(),
             painter = painterResource(id = R.drawable.img_mesh_network_visualization),
             contentDescription = stringResource(id = R.string.permission_encrypted_mesh_text),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillWidth,
+            alpha = 0.2f
         )
 
         // Subtle mesh background effect

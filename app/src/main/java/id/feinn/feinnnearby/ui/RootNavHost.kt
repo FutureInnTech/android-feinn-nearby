@@ -5,13 +5,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import id.feinn.feinnnearby.ui.dashboard.dashboardScreen
+import id.feinn.feinnnearby.ui.login.loginScreen
 import id.feinn.feinnnearby.ui.onboarding.onboardingScreen
 
 @Composable
 fun RootNavHost(
     modifier: Modifier = Modifier,
-    backStack: List<NavScreen>,
-    onBack: () -> Unit
+    onBack: () -> Unit = {},
+    onPush: (NavScreen) -> Unit = {},
+    backStack: List<NavScreen>
 ) {
 
     NavDisplay(
@@ -19,8 +21,14 @@ fun RootNavHost(
         backStack = backStack,
         onBack = onBack,
         entryProvider = entryProvider {
+            onboardingScreen(
+                onConnectClick = {
+                    onPush(NavScreen.LoginScreen)
+                }
+            )
+            loginScreen()
             dashboardScreen()
-            onboardingScreen()
+
         }
 
     )

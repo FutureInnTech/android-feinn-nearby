@@ -29,4 +29,25 @@
     <string name="permission_encrypted_mesh_text">End-to-end encrypted local mesh</string>
     <string name="permission_button_allow_all">Allow All Permissions</string>
     <string name="permission_button_setup_manually">Set Up Manually</string>
+
+    <string name="join_mesh_title">Join the Mesh</string>
+    <string name="join_mesh_subtitle">To discover and bridge with nearby devices, we need access to your local connectivity layers.</string>
+    <string name="join_mesh_ble_title">Bluetooth Low Energy</string>
+    <string name="join_mesh_ble_description">Essential for peer-to-peer discovery and high-speed handshake protocols within a 30m radius.</string>
+    <string name="join_mesh_ble_activate">Activate Bluetooth</string>
+    <string name="join_mesh_wifi_title">Wi-Fi Direct</string>
+    <string name="join_mesh_wifi_description">Enables high-bandwidth data transmission and long-range mesh nodes for heavy encrypted traffic.</string>
+    <string name="join_mesh_wifi_authorized">Authorized</string>
+    <string name="join_mesh_status_on">ON</string>
+    <string name="join_mesh_status_off">OFF</string>
+    <string name="join_mesh_button_connect">CONNECT TO MESH</string>
+    <string name="join_mesh_footer">SECURE P2P ENCRYPTION ENABLED BY DEFAULT</string>
+
+    <string name="login_title">Feinn Nearby</string>
+    <string name="login_subtitle">Connect securely to the local mesh network. No central servers, just privacy.</string>
+    <string name="login_feature_e2e">End-to-End</string>
+    <string name="login_feature_p2p">P2P Mesh</string>
+    <string name="login_button_create_account">Create New Account</string>
+    <string name="login_button_recovery">Login with Recovery Phrase</string>
+    <string name="login_footer">DISTRIBUTED SECURITY PROTOCOL V2.4.0</string>
 </resources>

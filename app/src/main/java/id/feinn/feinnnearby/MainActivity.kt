@@ -42,8 +42,9 @@ class MainActivity : ComponentActivity() {
 
                 RootNavHost(
                     modifier = Modifier.fillMaxSize(),
-                    backStack = backstack,
-                    onBack = viewModel::pop
+                    onBack = viewModel::pop,
+                    onPush = viewModel::push,
+                    backStack = backstack
                 )
             }
         }

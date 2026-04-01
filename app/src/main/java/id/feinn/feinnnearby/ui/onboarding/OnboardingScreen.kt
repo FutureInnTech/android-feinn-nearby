@@ -9,12 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import id.feinn.feinnnearby.ui.onboarding.page.HowItWorkPage
+import id.feinn.feinnnearby.ui.onboarding.page.JoinMeshNetworkPage
 import id.feinn.feinnnearby.ui.onboarding.page.PermissionEducationPage
 import kotlinx.coroutines.launch
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    onConnectClick: () -> Unit = {}
+) {
     Scaffold {  _ ->
 
         val pagerState = rememberPagerState(pageCount = { 3 })
@@ -34,8 +37,16 @@ fun OnboardingScreen() {
                         }
                     }
                 )
-                1 -> PermissionEducationPage()
-                2 -> HowItWorkPage()
+                1 -> PermissionEducationPage(
+                    onSetUpManually = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(2)
+                        }
+                    }
+                )
+                2 -> JoinMeshNetworkPage(
+                    onConnectClick = onConnectClick
+                )
             }
 
         }

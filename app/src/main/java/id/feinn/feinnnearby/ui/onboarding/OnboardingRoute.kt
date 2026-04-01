@@ -3,8 +3,12 @@ package id.feinn.feinnnearby.ui.onboarding
 import androidx.navigation3.runtime.EntryProviderScope
 import id.feinn.feinnnearby.ui.NavScreen
 
-fun EntryProviderScope<NavScreen>.onboardingScreen() {
+fun EntryProviderScope<NavScreen>.onboardingScreen(
+    onConnectClick: () -> Unit = {}
+) {
     entry<NavScreen.OnboardingScreen> {
-        OnboardingScreen()
+        OnboardingScreen(
+            onConnectClick = onConnectClick
+        )
     }
 }
