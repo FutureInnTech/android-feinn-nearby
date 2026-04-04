@@ -67,4 +67,35 @@
     <string name="profile_setup_dob_placeholder">Select date</string>
     <string name="profile_setup_info_text">Your profile information is shared only with people you connect with. All mesh data is encrypted end-to-end.</string>
     <string name="profile_setup_button_enter_dashboard">Enter Dashboard</string>
+
+    <string name="secure_chats_status_banner">OPERATING ON OFFLINE MESH NETWORK</string>
+    <string name="secure_chats_search_placeholder">Search secure channels...</string>
+    <string name="secure_chats_scan_nearby">Scan Nearby</string>
+    <string name="secure_chats_nav_messages">Messages</string>
+    <string name="secure_chats_nav_nearby">Nearby</string>
+    <string name="secure_chats_nav_profile">Profile</string>
+
+    <string name="profile_public_key_label">PUBLIC KEY ADDRESS</string>
+    <string name="profile_public_key_sample">0x71C7656EC7ab88b098defB751B7401B5f6…</string>
+    <string name="profile_edit_label">Edit Profile</string>
+    <string name="profile_security_alert_title">Security Alert</string>
+    <string name="profile_security_alert_description">Your recovery phrase is the only way to restore your identity if you lose access to this device. Store it offline in a safe place.</string>
+    <string name="profile_backup_recovery_phrase">Backup Recovery Phrase</string>
+    <string name="profile_never_share_phrase">NEVER SHARE YOUR PHRASE WITH ANYONE</string>
+    <string name="profile_identity_verified_title">Identity Verified</string>
+    <string name="profile_identity_verified_description">Validated via Mesh Protocol 2.4</string>
+    <string name="profile_identity_active_badge">ACTIVE</string>
+    <string name="profile_name_sample">Eleanor Vance</string>
+    <string name="profile_dob_sample">Born October 14, 1992</string>
+
+    <string name="nearby_scan_title">Scanning for peers…</string>
+    <string name="nearby_scan_subtitle">Establishing encrypted p2p links</string>
+    <string name="nearby_scan_available_nodes">AVAILABLE NODES</string>
+    <string name="nearby_scan_distance_away">%s away</string>
+    <string name="nearby_scan_direct">DIRECT</string>
+    <string name="nearby_scan_via_mesh">VIA MESH</string>
+    <string name="nearby_scan_button_connect">Connect</string>
+    <string name="nearby_scan_button_message">Message</string>
+    <string name="nearby_scan_footer_title">Scanning for peers in range…</string>
+    <string name="nearby_scan_footer_description">Encryption protocol: AES-256-GCM. Active nodes contribute to the mesh strength.</string>
 </resources>

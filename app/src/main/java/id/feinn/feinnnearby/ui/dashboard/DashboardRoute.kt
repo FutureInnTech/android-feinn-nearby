@@ -8,8 +8,6 @@ fun EntryProviderScope<NavScreen>.dashboardScreen() {
     entry<NavScreen.DashboardScreen> {
         val viewModel: DashboardViewModel = koinViewModel()
 
-        DashboardScreen(
-            onEvent = viewModel::onEvent
-        )
+        DashboardScreen()
     }
 }

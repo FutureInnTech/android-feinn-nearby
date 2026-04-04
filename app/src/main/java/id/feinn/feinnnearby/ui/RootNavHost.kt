@@ -38,7 +38,11 @@ fun RootNavHost(
                     onPush(NavScreen.ProfileSetupScreen)
                 }
             )
-            profileSetupScreen()
+            profileSetupScreen(
+                onEnterDashboard = {
+                    onPush(NavScreen.DashboardScreen)
+                }
+            )
             dashboardScreen()
 
         }
