@@ -13,6 +13,12 @@ sealed interface NavScreen : NavKey {
     data object LoginScreen: NavScreen
 
     @Serializable
+    data object CreateAccountScreen: NavScreen
+
+    @Serializable
+    data object ProfileSetupScreen: NavScreen
+
+    @Serializable
     data object DashboardScreen: NavScreen
 
 }

@@ -50,4 +50,21 @@
     <string name="login_button_create_account">Create New Account</string>
     <string name="login_button_recovery">Login with Recovery Phrase</string>
     <string name="login_footer">DISTRIBUTED SECURITY PROTOCOL V2.4.0</string>
+
+    <string name="create_account_secure_identity_title">Secure your Identity</string>
+    <string name="create_account_secure_identity_description">This 24-word recovery phrase is your unique private key. It\'s the ONLY way to access or recover your account. If you lose it, your identity and messages are gone forever.</string>
+    <string name="create_account_secure_identity_warning">NEVER share this phrase. Write it down on paper and store it in a safe place.</string>
+    <string name="create_account_button_written_down">I\'ve written it down</string>
+    <string name="create_account_button_copy_clipboard">Copy to clipboard</string>
+    <string name="create_account_security_risk_text">SECURITY RISK: ONLY COPY IF USING A SECURE MANAGER</string>
+
+    <string name="profile_setup_title">Set Up Your Identity</string>
+    <string name="profile_setup_subtitle">This is how you\'ll appear to nearby users on the mesh network.</string>
+    <string name="profile_setup_upload_photo">UPLOAD PROFILE PHOTO</string>
+    <string name="profile_setup_full_name_label">FULL NAME</string>
+    <string name="profile_setup_full_name_placeholder">e.g., Alex Rivers</string>
+    <string name="profile_setup_dob_label">DATE OF BIRTH</string>
+    <string name="profile_setup_dob_placeholder">Select date</string>
+    <string name="profile_setup_info_text">Your profile information is shared only with people you connect with. All mesh data is encrypted end-to-end.</string>
+    <string name="profile_setup_button_enter_dashboard">Enter Dashboard</string>
 </resources>

@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import id.feinn.feinnnearby.ui.createAccount.createAccountScreen
 import id.feinn.feinnnearby.ui.dashboard.dashboardScreen
 import id.feinn.feinnnearby.ui.login.loginScreen
 import id.feinn.feinnnearby.ui.onboarding.onboardingScreen
+import id.feinn.feinnnearby.ui.profileSetup.profileSetupScreen
 
 @Composable
 fun RootNavHost(
@@ -26,7 +28,17 @@ fun RootNavHost(
                     onPush(NavScreen.LoginScreen)
                 }
             )
-            loginScreen()
+            loginScreen(
+                onCreateAccountClick = {
+                    onPush(NavScreen.CreateAccountScreen)
+                }
+            )
+            createAccountScreen(
+                onWrittenDownClicked = {
+                    onPush(NavScreen.ProfileSetupScreen)
+                }
+            )
+            profileSetupScreen()
             dashboardScreen()
 
         }
