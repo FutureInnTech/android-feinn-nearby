@@ -14,6 +14,10 @@ class NavigationViewModel : ViewModel() {
         _backstackEntry.update { it + screen }
     }
 
+    fun replaceAll(screen: NavScreen) {
+        _backstackEntry.update { listOf(screen) }
+    }
+
     fun pop() {
         _backstackEntry.update { list ->
             if (list.isNotEmpty()) list.dropLast(1) else list

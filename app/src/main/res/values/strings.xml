@@ -29,15 +29,23 @@
     <string name="permission_encrypted_mesh_text">End-to-end encrypted local mesh</string>
     <string name="permission_button_allow_all">Allow All Permissions</string>
     <string name="permission_button_setup_manually">Set Up Manually</string>
+    <string name="permission_permanently_denied_description">You have permanently denied this permission. Please enable it in the application settings to use this feature.</string>
+    <string name="permission_button_open_settings">Open Settings</string>
+    <string name="permission_button_grant">Grant Permission</string>
+    <string name="permission_button_maybe_later">Maybe Later</string>
 
     <string name="join_mesh_title">Join the Mesh</string>
     <string name="join_mesh_subtitle">To discover and bridge with nearby devices, we need access to your local connectivity layers.</string>
     <string name="join_mesh_ble_title">Bluetooth Low Energy</string>
     <string name="join_mesh_ble_description">Essential for peer-to-peer discovery and high-speed handshake protocols within a 30m radius.</string>
     <string name="join_mesh_ble_activate">Activate Bluetooth</string>
+    <string name="join_mesh_ble_authorized">Bluetooth Authorized</string>
     <string name="join_mesh_wifi_title">Wi-Fi Direct</string>
     <string name="join_mesh_wifi_description">Enables high-bandwidth data transmission and long-range mesh nodes for heavy encrypted traffic.</string>
-    <string name="join_mesh_wifi_authorized">Authorized</string>
+    <string name="join_mesh_wifi_activate">Activate Wi-Fi</string>
+    <string name="join_mesh_wifi_authorized">Wi-Fi Authorized</string>
+    <string name="join_mesh_location_activate">Activate Location</string>
+    <string name="join_mesh_location_authorized">Location Authorized</string>
     <string name="join_mesh_status_on">ON</string>
     <string name="join_mesh_status_off">OFF</string>
     <string name="join_mesh_button_connect">CONNECT TO MESH</string>

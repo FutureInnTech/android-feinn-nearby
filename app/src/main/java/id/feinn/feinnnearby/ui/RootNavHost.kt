@@ -15,6 +15,7 @@ fun RootNavHost(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onPush: (NavScreen) -> Unit = {},
+    onReplaceAll: (NavScreen) -> Unit = {},
     backStack: List<NavScreen>
 ) {
 
@@ -25,7 +26,7 @@ fun RootNavHost(
         entryProvider = entryProvider {
             onboardingScreen(
                 onConnectClick = {
-                    onPush(NavScreen.LoginScreen)
+                    onReplaceAll(NavScreen.LoginScreen)
                 }
             )
             loginScreen(
@@ -40,7 +41,7 @@ fun RootNavHost(
             )
             profileSetupScreen(
                 onEnterDashboard = {
-                    onPush(NavScreen.DashboardScreen)
+                    onReplaceAll(NavScreen.DashboardScreen)
                 }
             )
             dashboardScreen()
