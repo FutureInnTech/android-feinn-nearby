@@ -44,17 +44,11 @@ import id.feinn.feinnnearby.ui.theme.FeinnNearbyTheme
 
 @Composable
 fun CreateAccountScreen(
+    state: CreateAccountState,
     modifier: Modifier = Modifier,
     onWrittenDownClicked: () -> Unit = {},
     onCopyClicked: () -> Unit = {}
 ) {
-    val words = listOf(
-        "pioneer", "quantum", "glacier", "whisper", "nebula", "horizon",
-        "crystal", "echo", "summit", "vault", "matrix", "aurora",
-        "cipher", "drift", "emerald", "fable", "gravity", "haven",
-        "index", "jungle", "kinetic", "lunar", "mosaic", "nomad"
-    )
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -82,7 +76,7 @@ fun CreateAccountScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         val description = buildAnnotatedString {
-            append("This 24-word recovery phrase is your unique private key. It's the ")
+            append("This 12-word recovery phrase is your unique private key. It's the ")
             withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
                 append("ONLY")
             }
@@ -107,7 +101,7 @@ fun CreateAccountScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         RecoveryPhraseGrid(
-            words = words,
+            words = state.seedPhrase,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -322,6 +316,6 @@ private fun RecoveryWordChip(
 @Composable
 private fun PreviewCreateAccountScreen() {
     FeinnNearbyTheme {
-        CreateAccountScreen()
+        CreateAccountScreen(state = CreateAccountState(seedPhrase = listOf("word", "word")))
     }
 }
