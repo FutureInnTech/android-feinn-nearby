@@ -8,10 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import id.feinn.feinnnearby.ui.NavScreen
 import org.koin.androidx.compose.koinViewModel
 
-fun EntryProviderScope<NavScreen>.createAccountScreen(
+fun EntryProviderScope<NavKey>.createAccountScreen(
     onWrittenDownClicked: () -> Unit = {},
 ) {
     entry<NavScreen.CreateAccountScreen> {

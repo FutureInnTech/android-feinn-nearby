@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     onBack = viewModel::pop,
                     onPush = viewModel::push,
                     onReplaceAll = viewModel::replaceAll,
-                    backStack = backstack
+                    backStack = { backstack }
                 )
             }
         }
